@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Recipe</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 800px;
+            margin-top: 20px;
+        }
+        .form-container {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .form-check-input {
+            margin-right: 10px;
+        }
+        .form-check-label {
+            margin-bottom: 0;
+        }
+        .submit-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .submit-button:hover {
+            background-color: #0056b3;
+        }
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if messages %}
+            <div class="alert alert-warning" role="alert">
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="form-container">
+            <h3 class="text-center">Edit Recipe</h3>
+
+            {% if recipe and recipe.id %}
+                <form action="{% url 'update_recipe' recipe.id %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label for="Name">Name:</label>
+                        <input type="text" name="Name" id="Name" class="form-control" value="{{ recipe.Name }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Pre_time">Preparation Time:</label>
+                        <input type="text" name="Pre_time" id="Pre_time" class="form-control" value="{{ recipe.Pre_time }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Difficulty">Difficulty:</label>
+                        <input type="text" name="Difficulty" id="Difficulty" class="form-control" value="{{ recipe.Difficulty }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input type="checkbox" name="Vegetarian" id="Vegetarian" class="form-check-input" {% if recipe.Vegetarian %}checked{% endif %}>
+                            <label class="form-check-label" for="Vegetarian">Is Vegetarian?</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Description">Description:</label>
+                        <textarea name="Description" id="Description" class="form-control" rows="3" required>{{ recipe.Description }}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Recipe_img">Recipe Image:</label>
+                        <input type="file" name="Recipe_img" id="Recipe_img" class="form-control">
+                    </div>
+
+                    <button type="submit" class="submit-button btn btn-primary">Submit</button>
+                </form>
+            {% else %}
+                <p>Error: Recipe ID is not available.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
