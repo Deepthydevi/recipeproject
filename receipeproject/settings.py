@@ -78,11 +78,7 @@ WSGI_APPLICATION = 'receipeproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'recipe_database',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'LOCALHOST',
-        'PORT':'3306'
+         'NAME': BASE_DIR / 'db.sqlite3',
 
     }
 }
